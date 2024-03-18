@@ -11,7 +11,7 @@
 - src/pages/index.html — HTML-файл главной страницы
 - src/types/index.ts — файл с типами
 - src/index.ts — точка входа приложения
-- src/styles/styles.scss — корневой файл стилей
+- src/scss/styles.scss — корневой файл стилей
 - src/utils/constants.ts — файл с константами
 - src/utils/utils.ts — файл с утилитами
 
@@ -40,11 +40,60 @@ npm run build
 ```
 yarn build
 ```
-Данные: 
+## Данные
 
-interface ITovar описывает данные карточек товара(id, name, description, price, category)
-type TCategory - описывает возмодные варианты категории товара
-export type TSposob - описывает возможные варианты способа оплаты
+```
+Возможные категории товара:
+export type TCategory = 'софт-скилл' | 'хард-скилл' | 'дополнительное' | 'кнопка' | 'другое';
+
+Возможные варианты оплаты товара:
+export type TPayment = 'online' | 'offline';
+
+Данные карточек товара:
+export interface IProduct {
+  id: number;
+  title: string; 
+  description : string; 
+  price: number | null; 
+  category: TCategory;
+  image: string; 
+}
+
+Данные формы оплаты:
+export interface IPaymentForm {
+  payment: TPayment; 
+  addres: string;
+}
+
+Данные формы контактов:
+export interface IContacts { 
+  email: string;
+  phone: string;
+}
+
+Данные формы страницы:
+export interface IPage {
+  products: IProduct[];
+  counter: number;
+}
+
+Данные корзины:
+export interface IBasket { 
+  products: IProduct[];
+  priceAll: number;
+}
+
+export interface IAppState {
+	products: IProduct[];
+	basket: IProduct[];
+}
+
+Данные для успешного оформления товара:
+export interface iSuccess extends IPaymentForm, IContacts {
+  total: number;
+  items: string[];
+}
+```
 
 ## Базовый код
 1) Класс EventEmitter - отвечает за возможность устанавливать и снимать события.
@@ -83,18 +132,62 @@ emitChanges - cообщает всем что модель поменялась.
 
 ## Модели данных
 
-interface IAppState - описывает класс AppState, которые содержит данные всего приложения (tovars - cодержит каталог товаров, basket - пустой массив, в который будут добавлять товары из каталога в корзину)
+1) класс LarekApi extends Api - класс для получения данных с сервера наследуется от базового класса Api
+
+Методы:
+getProducts - получает товары с сервера
+pushSuccessOrder - отправляет данные успешного заказа
+
+2) Класс AppState extends Model<T> - класс хранит текущее состояние приложения
+Поля:
+products: IProduct[] - массив товаров
+
+Методы:
+addBasket - добавляет товар в корзину
+removeBasket - удаляет товар из корзины
+clearBasket - очищает корзину
+
 
 ## Компоненты представления
-interface IBuyForm описывает данные формы покупки (sposob: TSposob - содержит способ оплаты, addres:string - содержит данные адреса покупателя)
+1) класс Product extends Component<IProduct> - класс наслtдуется от базового класса Component<T> и расширяется интерфейсом IProduct, служит для создания карточки продукта
 
-interface IContacts описывает данные формы данных покупателя (email - содержит данные почты покупателя,phone - содержит данные телефона покупателя)
+Методы:
+set id - устанавливает id товара
+set title - устанавливает title продукта
+set image - устанавливает image продукта
+set category - устанавливает category товара
+set price - устанавливает price товара
 
-interface IPage описывает данные, используемые на главной странице (tovars - каталог карточек на главной странице, counter - счетчик товаров в корзине)
+2) класс Page extends Component<IPage> - класс наследуется от базового класса Component<T> и расширяется интерфейсом IPage, служит для отображения главной страницы
 
-interface IBasket описывает данные класса IBasket (tovars - массив добавленных товаров, priceAll - общая цена за все товары,
-  Методы:
-  add(): void добавляет товар карточку при клике на кнопку "В корзину"
-  remove(): void удаляет товар из корзины при клике на иконку корзины в модальном окне корзины)
+Методы:
+set products - устанавливает каталог продуктов
+set counter - устанавливает кол-во товаров в корзине
 
+3) класс Basket extends Component<IBasket> - класс наследуется от базового класса Component<T> и расширяется интерфейсом IBasket, служит для отображения корзины
 
+Методы:
+set priceAll - устанавливает итоговую цену
+set products - устанавливает товары добавленные в корзину
+
+4) класс Contacts extends Component<IContacts> - класс наследуется от базового класса Component<T> и расширяется интерфейсом IContacts, служит для отображения формы контактов
+
+Методы:
+set email - устанавливает почту покупателя
+set phone - устанавливает телефон покупателя
+
+5) класс PaymentForm extends Component<IPaymentForm> - класс наследуется от базового класса Component<T> и расширяется интерфейсом IPaymentForm, служит для отображения формы заказа
+
+Методы:
+selectPayment - выбирает способ оплаты
+set addres - устанавливает адрес
+
+## Presenter
+
+Список событий:
+
+product:select - выбрана карточка товара
+product:add - товар добавлен в корзину
+product:remove - товар удален из корзины
+modal:open - модальное окно открыто
+modal:close - модальное окно закрыто
