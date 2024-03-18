@@ -83,11 +83,6 @@ export interface IBasket {
   priceAll: number;
 }
 
-export interface IAppState {
-	products: IProduct[];
-	basket: IProduct[];
-}
-
 Данные для успешного оформления товара:
 export interface iSuccess extends IPaymentForm, IContacts {
   total: number;
