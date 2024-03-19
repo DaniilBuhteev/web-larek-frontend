@@ -1,40 +1,43 @@
 import './scss/styles.scss';
 
-export type TCategory = 'софт-скилл' | 'хард-скилл' | 'дополнительное' | 'кнопка' | 'другое';
-export type TSposob = 'онлайн' | 'офлайн';
+export type TCategory = 'soft-skill' | 'hard-skill' | 'additional' | 'button' | 'other';
+export type TPayment = 'online' | 'offline';
 
-interface ITovar {
+export interface IProduct {
   id: number;
-  name: string; 
+  title: string; 
   description : string; 
-  price: number; 
+  price: number | null; 
   category: TCategory;
-  img: string; 
+  image: string; 
 }
 
-interface IBuyForm {
-  sposob: TSposob; 
-  addres: string;
+export interface IPaymentForm {
+  payment: TPayment; 
+  address: string;
 }
 
-interface IContacts { 
+export interface IContacts { 
   email: string;
   phone: string;
 }
 
-interface IPage {
-  tovars: ITovar[];
+export interface IPage {
+  products: IProduct[];
   counter: number;
 }
 
-interface IBasket { 
-  tovars: ITovar[];
+export interface IBasket { 
+  products: IProduct[];
   priceAll: number;
   add(): void;
   remove(): void;
 }
 
-interface IAppState {
-	tovars: ITovar[];
-	basket: ITovar[];
+export interface iOrder extends IPaymentForm, IContacts {
+}
+
+export interface ISuccess {
+  total:number; 
+  id:string[];
 }

@@ -62,7 +62,7 @@ export interface IProduct {
 Данные формы оплаты:
 export interface IPaymentForm {
   payment: TPayment; 
-  addres: string;
+  address: string;
 }
 
 Данные формы контактов:
@@ -83,11 +83,17 @@ export interface IBasket {
   priceAll: number;
 }
 
-Данные для успешного оформления товара:
-export interface iSuccess extends IPaymentForm, IContacts {
+Данные для успешного оформления заказа:
+export interface IOrder extends IPaymentForm, IContacts {
   total: number;
   items: string[];
 }
+
+export interface ISuccess {
+  total:number; 
+  id:string[];
+}
+
 ```
 
 ## Базовый код
