@@ -17,7 +17,7 @@ export interface IPaymentForm {
   address: string;
 }
 
-export interface IContacts { 
+export interface IContactsForm { 
   email: string;
   phone: string;
 }
@@ -34,7 +34,7 @@ export interface IBasket {
   remove(): void;
 }
 
-export interface iOrder extends IPaymentForm, IContacts {
+export interface iOrder extends IPaymentForm, IContactsForm {
 }
 
 export interface ISuccess {

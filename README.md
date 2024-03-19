@@ -66,7 +66,7 @@ export interface IPaymentForm {
 }
 
 Данные формы контактов:
-export interface IContacts { 
+export interface IContactsForm { 
   email: string;
   phone: string;
 }
@@ -84,7 +84,7 @@ export interface IBasket {
 }
 
 Данные для успешного оформления заказа:
-export interface IOrder extends IPaymentForm, IContacts {
+export interface IOrder extends IPaymentForm, IContactsForm {
   total: number;
   items: string[];
 }
