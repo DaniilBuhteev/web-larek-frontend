@@ -34,7 +34,7 @@ export interface IBasket {
   remove(): void;
 }
 
-export interface iOrder extends IPaymentForm, IContactsForm {
+export interface IOrder extends IPaymentForm, IContactsForm {
   total: number;
   items: string[];
 }
