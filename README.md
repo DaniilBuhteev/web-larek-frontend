@@ -89,6 +89,7 @@ export interface IOrder extends IPaymentForm, IContactsForm {
   items: string[];
 }
 
+Используется для типизации ответа сервера в случае успешного оформления заказа.
 export interface ISuccess {
   total:number; 
   id:string[];
