@@ -35,6 +35,8 @@ export interface IBasket {
 }
 
 export interface iOrder extends IPaymentForm, IContactsForm {
+  total: number;
+  items: string[];
 }
 
 export interface ISuccess {
