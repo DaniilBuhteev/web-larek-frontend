@@ -1,45 +1,50 @@
 import './scss/styles.scss';
-
 export type TCategory = 'soft-skill' | 'hard-skill' | 'additional' | 'button' | 'other';
 export type TPayment = 'online' | 'offline';
-
+export type FormErrors = Partial < Record < keyof IOrder, string >> ;
 export interface IProduct {
-  id: number;
-  title: string; 
-  description : string; 
-  price: number | null; 
-  category: TCategory;
-  image: string; 
+	id: string;
+	title: string;
+	description: string;
+	price: number | null;
+	category: TCategory;
+	image: string;
+	index: number;
 }
-
 export interface IPaymentForm {
-  payment: TPayment; 
-  address: string;
+	payment: string;
+	address: string;
 }
-
-export interface IContactsForm { 
-  email: string;
-  phone: string;
+export interface IContactsForm {
+	email: string;
+	phone: string;
 }
-
 export interface IPage {
-  products: IProduct[];
-  counter: number;
+	products: IProduct[];
+	counter: number;
 }
-
-export interface IBasket { 
-  products: IProduct[];
-  priceAll: number;
-  add(): void;
-  remove(): void;
+export interface IBasket {
+	products: IProduct[];
+	priceAll: number;
+	add(): void;
+	remove(): void;
 }
-
 export interface IOrder extends IPaymentForm, IContactsForm {
-  total: number;
-  items: string[];
+	total: number | string;
+	items: string[];
 }
-
 export interface ISuccess {
-  total:number; 
-  id:string[];
+	total: number;
+	id: string;
+}
+export interface IAppState {}
+export interface IModalData {
+	content: HTMLElement;
+}
+export interface IFormState {
+	valid: boolean;
+	errors: string[];
+}
+export interface IActions {
+	onClick: () => void;
 }
